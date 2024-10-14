@@ -4,14 +4,6 @@ fips_begin_lib(soem)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_LIST_DIR}/cmake/Modules")
 
-if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-  # Default to installing in SOEM source directory
-  set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_LIST_DIR}/install)
-endif()
-
-set(SOEM_INCLUDE_INSTALL_DIR include/soem)
-set(SOEM_LIB_INSTALL_DIR lib)
-
 if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
   set(BUILD_TESTS TRUE)
 else()
@@ -68,31 +60,30 @@ file(GLOB SOEM_HEADERS soem/*.h)
 file(GLOB OSAL_HEADERS osal/osal.h osal/${OS}/*.h)
 file(GLOB OSHW_HEADERS oshw/${OS}/*.h)
 
-fips_begin_lib(soem)
 fips_files(
   ${SOEM_SOURCES}
   ${OSAL_SOURCES}
   ${OSHW_SOURCES}
   ${OSHW_EXTRA_SOURCES})
+  fips_libs(${OS_LIBS})
+  message(${OS_LIBS})
 fips_end_lib(soem)
-
-target_link_libraries(soem ${OS_LIBS})
 
 
 target_include_directories(soem PRIVATE
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/soem>
   $<INSTALL_INTERFACE:include/soem>)
 
-target_include_directories(soem PUBLIC
+target_include_directories(soem PRIVATE
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/osal>
   $<INSTALL_INTERFACE:include/soem>)
 
-target_include_directories(soem PUBLIC
+target_include_directories(soem PRIVATE
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/osal/${OS}>
   $<INSTALL_INTERFACE:include/soem>)
 
 target_include_directories(soem
-  PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/oshw/${OS}>
+  PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/oshw/${OS}>
   $<INSTALL_INTERFACE:include/soem>
   )
 
