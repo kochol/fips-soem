@@ -66,7 +66,6 @@ fips_files(
   ${OSHW_SOURCES}
   ${OSHW_EXTRA_SOURCES})
   fips_libs(${OS_LIBS})
-  message(${OS_LIBS})
 fips_end_lib(soem)
 
 
@@ -74,16 +73,16 @@ target_include_directories(soem PRIVATE
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/soem>
   $<INSTALL_INTERFACE:include/soem>)
 
-target_include_directories(soem PRIVATE
+target_include_directories(soem PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/osal>
   $<INSTALL_INTERFACE:include/soem>)
 
-target_include_directories(soem PRIVATE
+target_include_directories(soem PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/osal/${OS}>
   $<INSTALL_INTERFACE:include/soem>)
 
 target_include_directories(soem
-  PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/oshw/${OS}>
+  PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/oshw/${OS}>
   $<INSTALL_INTERFACE:include/soem>
   )
 
