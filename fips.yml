@@ -1,0 +1,9 @@
+#
+# fips-soem
+#
+---
+exports:
+    header-dirs : [ 'soem/'  ]
+    modules:
+        soem:   soem
+
