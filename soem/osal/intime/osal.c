@@ -62,27 +62,3 @@ int osal_usleep(uint32 usec)
    RtSleepEx (usec / 1000);
    return 1;
 }
-
-/* Mutex is not needed when running single threaded */
-
-void osal_mtx_lock(osal_mutex_t * mtx)
-{
-        /* RtWaitForSingleObject((HANDLE)mtx, INFINITE); */
-}
-
-void osal_mtx_unlock(osal_mutex_t * mtx)
-{
-        /* RtReleaseMutex((HANDLE)mtx); */
-}
-
-int osal_mtx_lock_timeout(osal_mutex_t * mtx, uint32_t time_ms)
-{
-        /* return RtWaitForSingleObject((HANDLE)mtx, time_ms); */
-        return 0;
-}
-
-osal_mutex_t * osal_mtx_create(void)
-{
-        /* return (void*)RtCreateMutex(NULL, FALSE, NULL); */
-        return (void *)0;
-}

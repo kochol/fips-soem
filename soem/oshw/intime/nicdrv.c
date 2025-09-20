@@ -396,6 +396,9 @@ int ecx_outframe_red(ecx_portt *port, uint8 idx)
    ehp->sa1 = oshw_htons(priMAC[1]);
    /* transmit over primary socket*/
    rval = ecx_outframe(port, idx, 0);
+   ec_stackT* stack;
+   stack = &(port->stack);
+
    if (port->redstate != ECT_RED_NONE)
    {
       ehp = (ec_etherheadert *)&(port->txbuf2);
@@ -412,6 +415,7 @@ int ecx_outframe_red(ecx_portt *port, uint8 idx)
       hpeAttachTransmitBufferSet(port->redport->handle, port->tx_buffers[idx]);
       port->redport->rxbufstat[idx] = EC_BUF_TX;
       status = hpeStartTransmitter(port->redport->handle);
+
       if (status != E_OK)
       {
          (*stack->rxbufstat)[idx] = EC_BUF_EMPTY;

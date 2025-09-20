@@ -20,6 +20,9 @@
 #include "osal.h"
 #include "ethercattype.h"
 #include "ethercatbase.h"
+#include "nicdrv.h"
+
+extern ecx_portt     ecx_port;
 
 /** Write data to EtherCAT datagram.
  *
