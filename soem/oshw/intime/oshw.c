@@ -78,6 +78,12 @@ ec_adaptert * oshw_find_adapters (void)
          continue;
       }
 
+      /* Skip virtual network interfaces that start with "ven" */
+      if (ifa->ifa_name && strncmp(ifa->ifa_name, "ven", 3) == 0)
+      {
+         continue;
+      }
+
       /* Allocate memory for adapter structure */
       adapter = (ec_adaptert *)malloc(sizeof(ec_adaptert));
       if (adapter == NULL)
