@@ -52,7 +52,7 @@ ec_adaptert * oshw_find_adapters (void)
    int i = 0;
 
    /* List of supported HPE interface names */
-   const char* supported_interfaces[] = {"ie1g", "rtl1g", "rtl1gl"};
+   const char* supported_interfaces[] = {"ie1g", "rtl1g"};
    int num_supported = sizeof(supported_interfaces) / sizeof(supported_interfaces[0]);
 
    /* Probe each supported interface type up to MAX_NIC_INSTANCE */
@@ -68,7 +68,7 @@ ec_adaptert * oshw_find_adapters (void)
          snprintf(ifname, sizeof(ifname), "%s%d", supported_interfaces[interface_idx], instance);
 
          /* Try to open the HPE interface with PROBE_ONLY to check if it exists */
-         status = hpeOpen(ifname, SPEED_1000 | DUPLEX_FULL | PROBE_ONLY, NO_INTERRUPT, &handle);
+         status = hpeOpen(ifname, PROBE_ONLY, NO_INTERRUPT, &handle);
 
          if (status == E_OK)
          {
@@ -106,6 +106,11 @@ ec_adaptert * oshw_find_adapters (void)
 
             prev_adapter = adapter;
             i++;
+         }
+         else
+         {
+             // Skip other instances
+             break;
          }
       }
    }
